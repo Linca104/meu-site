@@ -1,3 +1,322 @@
-tik tak tik tak
-tik     tik    
-    tak     tak
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora IMC - O Melhor Site do Mundo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Spectral+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset de estilo */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo da página */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #111;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            font-size: 16px;
+            background: linear-gradient(120deg, #ff6f61, #ff3b3f, #9c27b0);
+            background-size: 600% 600%;
+            animation: gradientBG 6s ease infinite;
+        }
+
+        h1 {
+            font-family: 'Spectral SC', serif;
+            font-size: 72px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 6px;
+            margin-bottom: 40px;
+            text-shadow: 0px 0px 30px rgba(255, 255, 255, 0.7), 0px 0px 80px rgba(255, 0, 150, 0.6);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        /* Container de formulário com borda 3D */
+        .container {
+            position: relative;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            animation: formSlide 1s ease-out;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        label {
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 10px;
+            display: block;
+            font-weight: bold;
+            text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 20px;
+            border-radius: 15px;
+            border: none;
+            font-size: 22px;
+            margin-top: 15px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255, 0, 150, 0.7);
+        }
+
+        /* Botão com animação de 3D */
+        button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, #FF0055, #FF8C00);
+            color: #fff;
+            font-size: 24px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(255, 0, 150, 0.8);
+            background: linear-gradient(45deg, #FF8C00, #FF0055);
+        }
+
+        /* Grupo de rádio */
+        .radio-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .radio-group input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .radio-group label {
+            font-size: 22px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .radio-group input:checked + label {
+            color: #FFEB3B;
+            text-shadow: 0 0 15px rgba(255, 0, 150, 1);
+        }
+
+        .radio-group input:hover {
+            transform: scale(1.4);
+        }
+
+        /* Resultado com animação de brilho */
+        .resultado {
+            margin-top: 30px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #FFEB3B;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 0, 150, 0.9);
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        /* Animações */
+        @keyframes gradientBG {
+            0% { background: linear-gradient(120deg, #ff6f61, #ff3b3f, #9c27b0); }
+            50% { background: linear-gradient(120deg, #ff0055, #ff8c00, #00bcd4); }
+            100% { background: linear-gradient(120deg, #9c27b0, #ff6f61, #ff3b3f); }
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.6), 0px 0px 60px rgba(255, 0, 150, 1); }
+            50% { text-shadow: 0px 0px 40px rgba(255, 255, 255, 0.8), 0px 0px 100px rgba(255, 0, 150, 1); }
+            100% { text-shadow: 0px 0px 80px rgba(255, 255, 255, 1), 0px 0px 150px rgba(255, 0, 150, 1); }
+        }
+
+        @keyframes formSlide {
+            0% { transform: translateY(100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            20% { opacity: 0.4; }
+            40% { opacity: 1; }
+            60% { opacity: 0.5; }
+            80% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+
+        /* Efeito de partícula */
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: rgba(255, 0, 150, 0.8);
+            border-radius: 50%;
+            animation: particleAnimation 2s infinite;
+        }
+
+        @keyframes particleAnimation {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(150px) translateY(150px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Estilo para animação sombria de IMC > 30 */
+        .darkEffect {
+            animation: flicker 1s infinite, darkBackground 3s ease-in-out infinite;
+            color: #ff0000;
+            text-shadow: 0px 0px 30px rgba(255, 0, 0, 0.9), 0px 0px 60px rgba(255, 0, 0, 1);
+        }
+
+        @keyframes darkBackground {
+            0% { background-color: #000; }
+            50% { background-color: #2e0000; }
+            100% { background-color: #000; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+            }
+            .container {
+                padding: 30px;
+            }
+            button {
+                font-size: 22px;
+            }
+            .resultado {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora de IMC - O Melhor dos Melhores</h1>
+
+    <div class="container">
+        <form id="imcForm">
+            <div class="radio-group">
+                <div>
+                    <input type="radio" name="genero" id="female" value="feminino">
+                    <label for="female">Feminino</label>
+                </div>
+                <div>
+                    <input type="radio" name="genero" id="male" value="masculino">
+                    <label for="male">Masculino</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="peso">Peso (kg):</label>
+                <input type="number" id="peso" placeholder="Digite seu peso" required>
+            </div>
+
+            <div class="input-group">
+                <label for="altura">Altura (m):</label>
+                <input type="number" id="altura" placeholder="Digite sua altura" required step="0.01">
+            </div>
+
+            <button type="button" onclick="calcularIMC()">Calcular</button>
+
+            <input type="text" id="resultado" placeholder="Seu IMC será exibido aqui" readonly>
+
+            <div id="imcResult" class="resultado"></div>
+        </form>
+    </div>
+
+    <!-- Efeito de Partículas -->
+    <div class="particle" style="top: 10%; left: 20%; animation-delay: 0.5s;"></div>
+    <div class="particle" style="top: 60%; left: 50%; animation-delay: 1.5s;"></div>
+    <div class="particle" style="top: 40%; left: 80%; animation-delay: 2s;"></div>
+
+    <script>
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById("peso").value);
+            const altura = parseFloat(document.getElementById("altura").value);
+
+            if (!peso || !altura) {
+                alert("Por favor, preencha o peso e a altura corretamente.");
+                return;
+            }
+
+            const imc = peso / (altura * altura);
+            const resultado = document.getElementById("resultado");
+            const imcResult = document.getElementById("imcResult");
+
+            resultado.value = `Seu IMC é: ${imc.toFixed(2)}`;
+            imcResult.innerHTML = `<p>Seu IMC é: <strong>${imc.toFixed(2)}</strong></p>`;
+
+            let categoria = "";
+            let effectClass = "";
+
+            if (imc < 18.5) {
+                categoria = "Abaixo do peso";
+            } else if (imc >= 18.5 && imc < 24.9) {
+                categoria = "Peso normal";
+            } else if (imc >= 25 && imc < 29.9) {
+                categoria = "Sobrepeso";
+            } else {
+                categoria = "Obesidade";
+                effectClass = "darkEffect"; // Animação sombria caso o IMC seja acima de 30
+            }
+
+            imcResult.innerHTML += `<p>Categoria: <strong>${categoria}</strong></p>`;
+
+            // Adiciona a classe de efeito sombria se necessário
+            imcResult.classList.add(effectClass);
+
+            // Exibe o resultado com animação
+            imcResult.style.opacity = 1;
+        }
+    </script>
+
+</body>
+</html>
